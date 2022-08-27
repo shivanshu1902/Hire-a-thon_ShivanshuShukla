@@ -1,0 +1,16 @@
+Select order_time + pichup_time + delivery_time 
+    as total_end_time
+from
+(
+Select
+  datediff(sec, order_time, order_pickup_time)
+    as order_time,
+  datediff(sec, order_pickup_time, delivery_boy_pickup_time)
+    as pickup_time,
+  datediff(sec, delivery_boy_pickup_time, customers_delivery_time)
+    as delivery_time, branch_code
+from
+    order_tbl
+where order_time >= '2022-08-01 00-00-00.00'
+)
+group by branch_code
